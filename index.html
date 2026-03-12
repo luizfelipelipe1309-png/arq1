@@ -1,31 +1,622 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taverna dos Arqueiros</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Taverna dos Arqueiros - Arquearia & Restaurante Medieval</title>
+    <style>
+        :root {
+            --dourado: #c9a227;
+            --vermelho-sangue: #8b0000;
+            --preto-medieval: #1a1a1a;
+            --madeira-escura: #3e2723;
+            --pergaminho: #f5e6c8;
+            --verde-medieval: #2d5a27;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--preto-medieval);
+            color: var(--pergaminho);
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--madeira-escura), var(--preto-medieval));
+            border-bottom: 3px solid var(--dourado);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--dourado);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .menu-links a {
+            text-decoration: none;
+            color: var(--pergaminho);
+            margin-left: 20px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .menu-links a:hover {
+            color: var(--dourado);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://share.google/iMbhfoW66FzMf2Oxh');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--dourado);
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.9);
+        }
+
+        .hero .slogan {
+            font-size: 1.5rem;
+            color: var(--pergaminho);
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .hero .slogan span {
+            color: var(--vermelho-sangue);
+            font-weight: bold;
+        }
+
+        .btn-medieval {
+            background: linear-gradient(135deg, var(--vermelho-sangue), #5a0000);
+            color: var(--dourado);
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            border: 2px solid var(--dourado);
+        }
+
+        .btn-medieval:hover {
+            background: linear-gradient(135deg, var(--dourado), #a6821f);
+            color: var(--preto-medieval);
+            transform: translateY(-3px);
+        }
+
+        section {
+            padding: 80px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--dourado);
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .sobre-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .sobre-texto {
+            flex: 1;
+            min-width: 300px;
+            background: linear-gradient(135deg, var(--pergaminho), #e8d5a5);
+            padding: 40px;
+            border-radius: 10px;
+            border: 3px solid var(--dourado);
+        }
+
+        .sobre-texto h3 {
+            color: var(--vermelho-sangue);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .sobre-texto p {
+            color: var(--preto-medieval);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .sobre-img img {
+            width: 100%;
+            border-radius: 10px;
+            border: 4px solid var(--dourado);
+        }
+
+        .arquearia-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card-arquearia {
+            background: linear-gradient(135deg, var(--pergaminho), #e8d5a5);
+            border-radius: 10px;
+            padding: 25px;
+            border: 3px solid var(--dourado);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .card-arquearia h3 {
+            color: var(--vermelho-sangue);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card-arquearia ul {
+            list-style: none;
+            color: var(--preto-medieval);
+        }
+
+        .card-arquearia ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--dourado);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card-prato {
+            background: linear-gradient(135deg, var(--pergaminho), #e8d5a5);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--dourado);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .card-prato img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-info {
+            padding: 20px;
+        }
+
+        .card-info h3 {
+            color: var(--vermelho-sangue);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card-info p {
+            color: var(--preto-medieval);
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .preco {
+            color: var(--vermelho-sangue);
+            font-weight: bold;
+            font-size: 1.3rem;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .categoria {
+            background: var(--vermelho-sangue);
+            color: var(--dourado);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .contato-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .info-contato, .form-reserva {
+            flex: 1;
+            min-width: 300px;
+            background: linear-gradient(135deg, var(--pergaminho), #e8d5a5);
+            padding: 30px;
+            border-radius: 10px;
+            border: 3px solid var(--dourado);
+        }
+
+        .info-contato h3, .form-reserva h3 {
+            color: var(--vermelho-sangue);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .form-reserva input, 
+        .form-reserva textarea, 
+        .form-reserva select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid var(--dourado);
+            border-radius: 8px;
+            background: var(--pergaminho);
+            color: var(--preto-medieval);
+            font-size: 1rem;
+        }
+
+        .form-reserva button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--vermelho-sangue), #5a0000);
+            color: var(--dourado);
+            border: 2px solid var(--dourado);
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .form-reserva button:hover {
+            background: linear-gradient(135deg, var(--dourado), #a6821f);
+            color: var(--preto-medieval);
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--madeira-escura), var(--preto-medieval));
+            border-top: 3px solid var(--dourado);
+            color: var(--pergaminho);
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        footer p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            nav { flex-direction: column; gap: 10px; }
+            .menu-links a { margin: 0 10px; }
+        }
+    </style>
 </head>
 <body>
+
+    <!-- CABEÇALHO -->
     <header>
-        <h1>Welcome to Taverna dos Arqueiros</h1>
+        <nav>
+            <div class="logo">🏹 Taverna dos Arqueiros</div>
+            <div class="menu-links">
+                <a href="#inicio">Início</a>
+                <a href="#sobre">Sobre</a>
+                <a href="#arquearia">Arquearia</a>
+                <a href="#menu">Cardápio</a>
+                <a href="#contato">Reservas</a>
+            </div>
+        </nav>
     </header>
-    <main>
-        <section>
-            <h2>About Us</h2>
-            <p>Join us for a warm meal and a merry time in our medieval tavern!</p>
-        </section>
-        <section>
-            <h2>Menu</h2>
-            <ul>
-                <li>Roasted Boar</li>
-                <li>Mead</li>
-                <li>Vegetable Stew</li>
-            </ul>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 Taverna dos Arqueiros</p>
-    </footer>
-</body>
-</html>
+
+    <!-- BANNER PRINCIPAL -->
+    <section id="inicio" class="hero">
+        <h1>Taverna dos Arqueiros</h1>
+        <p class="slogan">🏹 "Mire no alvo, celebre na mesa."</p>
+        <a href="#contato" class="btn-medieval">Faça sua Reserva</a>
+    </section>
+
+    <!-- SOBRE NÓS -->
+    <section id="sobre">
+        <h2>Nossa História</h2>
+        <div class="sobre-container">
+            <div class="sobre-img">
+                <img src="https://www.tavernamedieval.com.br/imagens/ambientes/Masmorra-n-1.jpg" alt="Castelo Medieval">
+            </div>
+            <div class="sobre-texto">
+                <h3>🏰 Uma Lenda Medieval</h3>
+                <p>Fundada em 2026, a Taverna dos Arqueiros é um refúgio para guerreiros, nobres e viajantes que buscam uma refeição digna de reis.</p>
+                <br>
+                <p>Nossos chefs preparam pratos com receitas ancestrais, trazendo os sabores autênticos da Idade Média para sua mesa.</p>
+                <br>
+                <p><strong>📍 Localização:</strong> Rua Doutor Mauro Sampaio, 760 - Lagoa Seca, Juazeiro do Norte - CE</p>
+                <p><strong>📐 Área:</strong> 1.000 m²</p>
+                <p><strong>👥 Capacidade:</strong> 80 pessoas (restaurante) + 20 (arquearia)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARQUEARIA -->
+    <section id="arquearia">
+        <h2>🎯 Área de Arquearia</h2>
+        <div class="arquearia-grid">
+            <div class="card-arquearia">
+                <h3>🏹 Estrutura</h3>
+                <ul>
+                    <li>5 a 8 pistas de tiro</li>
+                    <li>Distância regulamentar (10m a 30m)</li>
+                    <li>Rede de proteção e barreiras de segurança</li>
+                    <li>Área de espera confortável</li>
+                </ul>
+            </div>
+            <div class="card-arquearia">
+                <h3>🎯 Equipamentos</h3>
+                <ul>
+                    <li>Arcos recurvos e compostos</li>
+                    <li>Flechas profissionais</li>
+                    <li>Alvos oficiais</li>
+                    <li>Protetores (braço e peito)</li>
+                </ul>
+            </div>
+            <div class="card-arquearia">
+                <h3>👨‍🏫 Instrução</h3>
+                <ul>
+                    <li>Instrutor qualificado</li>
+                    <li>Termo de responsabilidade</li>
+                    <li>Seguro empresarial</li>
+                    <li>Monitoramento por câmeras</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+<!-- ==================== CARDÁPIO MEDIEVAL ==================== -->
+<section id="menu">
+    <h2>🍖 Cardápio Medieval Completo</h2>
+    
+    <!-- ENTRADAS -->
+    <h3 style="color: var(--dourado); font-size: 2rem; margin: 40px 0 20px;">🥘 Entradas</h3>
+    <div class="menu-grid">
+        <div class="card-prato">
+            <img src="https://images.unsplash.com/photo-1541544741938-0af808871cc0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Entrada 1">
+            <div class="card-info">
+                <span class="categoria">Entrada</span>
+                <h3>🍞 Pão do Ferreiro</h3>
+                <p>Pão artesanal de fermentação natural, servido com manteiga de ervas e mel.</p>
+                <span class="preco">R$ 18,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://www.baressp.com.br/eventos/fotos2/tavernamedieval-min.jpg" alt="Entrada 2">
+            <div class="card-info">
+                <span class="categoria">Entrada</span>
+                <h3>🥣 Sopa do Rei</h3>
+                <p>Sopa cremosa de legumes com carne seca e temperos medievais.</p>
+                <span class="preco">R$ 25,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Entrada 3">
+            <div class="card-info">
+                <span class="categoria">Entrada</span>
+                <h3>🥗 Salada do Cavaleiro</h3>
+                <p>Mix de folhas, queijos, nozes e molho especial da casa.</p>
+                <span class="preco">R$ 22,00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRINCIPAIS -->
+    <h3 style="color: var(--dourado); font-size: 2rem; margin: 40px 0 20px;">🍖 Pratos Principais</h3>
+    <div class="menu-grid">
+        <div class="card-prato">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Prato 1">
+            <div class="card-info">
+                <span class="categoria">Principal</span>
+                <h3>🍖 Costelas do Rei</h3>
+                <p>Costelas suínas assadas lentamente com ervas medievais e mel. Acompanha batatas rústicas.</p>
+                <span class="preco">R$ 69,90</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Prato 2">
+            <div class="card-info">
+                <span class="categoria">Principal</span>
+                <h3>🥩 Bife do Arqueiro</h3>
+                <p>Filete mignon grelhado na brasa com molho de pimenta e legumes assados.</p>
+                <span class="preco">R$ 75,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Prato 3">
+            <div class="card-info">
+                <span class="categoria">Principal</span>
+                <h3>🍕 Pizza do Castelo</h3>
+                <p>Massa artesanal com queijo, presunto, cogumelos e manjericão fresco.</p>
+                <span class="preco">R$ 45,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://colonialconservas.com.br/wp-content/uploads/2022/07/macarrao-com-molho-rustico-de-tomate-scaled.webp" alt="Prato 4">
+            <div class="card-info">
+                <span class="categoria">Principal</span>
+                <h3>🍝 Macarrão do Monge</h3>
+                <p>Massa fresca com molho de tomate caseiro, manjericão e queijo parmesão.</p>
+                <span class="preco">R$ 38,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://images.unsplash.com/photo-1532550907401-a500c9a57435?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Prato 5">
+            <div class="card-info">
+                <span class="categoria">Principal</span>
+                <h3>🍗 Frango do Ferreiro</h3>
+                <p>Frango assado com batatas, cenouras e molho de mostarda e mel.</p>
+                <span class="preco">R$ 52,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://www.restodonte.com.br/recipePics/9900223.jpg?v24" alt="Prato 6">
+            <div class="card-info">
+                <span class="categoria">Principal</span>
+                <h3>🐟 Peixe do Pescador</h3>
+                <p>Filete de peixe grelhado com legumes e molho de limão e ervas.</p>
+                <span class="preco">R$ 58,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://thonilitsz.arq.br/wp-content/uploads/2014/05/caldo-de-mandioca-com-carne-seca.jpg" alt="Prato 7">
+            <div class="card-info">
+                <span class="categoria">Principal</span>
+                <h3>🥘 Ensopado do Vaqueiro</h3>
+                <p>Carne de sol desfiada com mandioca, queijo coalho e temperos regionais.</p>
+                <span class="preco">R$ 48,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://www.tavernamedieval.com.br/imagens/menu/cavaleiro%20negro.jpg" alt="Prato 8">
+            <div class="card-info">
+                <span class="categoria">Principal</span>
+                <h3>🍔 Hambúrguer do Guerreiro</h3>
+                <p>Hambúrguer artesanal de 200g com queijo cheddar, bacon e cebola caramelizada.</p>
+                <span class="preco">R$ 42,00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACOMPANHAMENTOS -->
+    <h3 style="color: var(--dourado); font-size: 2rem; margin: 40px 0 20px;">🥔 Acompanhamentos</h3>
+    <div class="menu-grid">
+        <div class="card-prato">
+            <img src="https://static.madebychoices.pt/wp-content/uploads/2022/03/batatas-ru%CC%81sticas-2.jpg" alt="Acompanhamento 1">
+            <div class="card-info">
+                <span class="categoria">Acompanhamento</span>
+                <h3>🥔 Batatas Rústicas</h3>
+                <p>Batatas assadas com alecrim e alho.</p>
+                <span class="preco">R$ 15,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://www.adoro.com.br/wp-content/uploads/2024/10/blog_millenium__0000_Texto-4-Legumes-Assados-com-Ervas_-O-Acompanhamento-Perfeito-para-Qualquer-Ocasiao.png" alt="Acompanhamento 2">
+            <div class="card-info">
+                <span class="categoria">Acompanhamento</span>
+                <h3>🥦 Legumes Assados</h3>
+                <p>Mix de legumes da estação com ervas finas.</p>
+                <span class="preco">R$ 18,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Acompanhamento 3">
+            <div class="card-info">
+                <span class="categoria">Acompanhamento</span>
+                <h3>🍚 Arroz Selvagem</h3>
+                <p>Arroz com cogumelos e ervas medievais.</p>
+                <span class="preco">R$ 12,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Acompanhamento 4">
+            <div class="card-info">
+                <span class="categoria">Acompanhamento</span>
+                <h3>🥗 Salada Mista</h3>
+                <p>Mix de folhas frescas com tomate e cebola roxa.</p>
+                <span class="preco">R$ 10,00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SOBREMESAS -->
+    <h3 style="color: var(--dourado); font-size: 2rem; margin: 40px 0 20px;">🍰 Sobremesas</h3>
+    <div class="menu" alt="Sobremesa 1">
+        <img src="https://revistaanamaria.com.br/wp-content/uploads/2024/06/32298.jpg"
+            <div class="card-info">
+                <span class="categoria">Sobremesa</span>
+                <h3>🍫 Chocolate do Alquimista</h3>
+                <p>Chocolate belga quente com marshmallows e chantilly.</p>
+                <span class="preco">R$ 22,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://bocadoforno.com.br/wp-content/uploads/2024/11/pudim-de-leite-condensado-3.webp" alt="Sobremesa 2">
+            <div class="card-info">
+                <span class="categoria">Sobremesa</span>
+                <h3>🍮 Pudim do Abade</h3>
+                <p>Pudim de leite condensado com calda de caramelo artesanal.</p>
+                <span class="preco">R$ 18,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://img.freepik.com/fotos-premium/torta-redonda-com-diferentes-bagas-doces_1106981-2874.jpg" alt="Sobremesa 3">
+            <div class="card-info">
+                <span class="categoria">Sobremesa</span>
+                <h3>🍓 Torta da Rainha</h3>
+                <p>Torta de frutas vermelhas com massa crocante e sorvete.</p>
+                <span class="preco">R$ 25,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="1https://lens.usercontent.google.com/banana?agsi=CmdnbG9iYWw6OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAwZWI6MToxNjZiNmJmNTYwYzQxOGMxOjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAxZWUwODIwMzM2ODowMDA2NGM1YmUwMTE3ZWRmEAI=" alt="Sobremesa 4">
+            <div class="card-info">
+                <span class="categoria">Sobremesa</span>
+                <h3>🍦 Sorvete do Vaqueiro</h3>
+                <p>Três bolas de sorvete artesanal com calda de chocolate e morango.</p>
+                <span class="preco">R$ 20,00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- BEBIDAS -->
+    <h3 style="color: var(--dourado); font-size: 2rem; margin: 40px 0 20px;">🍷 Bebidas</h3>
+    <div class="menu-grid">
+        <div class="card-prato">
+            <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Bebida 1">
+            <div class="card-info">
+                <span class="categoria">Bebida</span>
+                <h3>🍷 Vinho do Castelo</h3>
+                <p>Vinho tinto encorpado, servido em jarro de ferro.</p>
+                <span class="preco">R$ 28,00</span>
+            </div>
+        </div>
+        <div class="card-prato">
+            <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Bebida 2">
+            <div class="card-info">
+                <span class="categoria">Bebida</span>
+                <h3>🍺 Cerveja do Ferreiro</h3>
+                <p>Cerveja artesanal
